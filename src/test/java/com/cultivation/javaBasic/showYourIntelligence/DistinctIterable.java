@@ -28,6 +28,7 @@ class DistinctIterator<E> implements Iterator<E> {
     // <--start
     @SuppressWarnings({"FieldCanBeLocal", "unused"})
     private final Iterator<E> iterator;
+    ArrayList<E> tempList = new ArrayList<>();
 
     DistinctIterator(Iterator<E> iterator) {
         this.iterator = iterator;
@@ -35,12 +36,17 @@ class DistinctIterator<E> implements Iterator<E> {
 
     @Override
     public boolean hasNext() {
-        throw new NotImplementedException();
+        if(iterator.hasNext() && !tempList.contains(iterator.next())) {
+            return true;
+        }
+        return false;
     }
 
     @Override
     public E next() {
-        throw new NotImplementedException();
+        E item = iterator.next();
+        tempList.add(item);
+        return item;
     }
     // --end->
 }
